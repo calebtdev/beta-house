@@ -7,8 +7,9 @@ const Signin = () => {
   const [wrongPassword, setwrongPassword] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const Signuproute = () => {
     Navigate("/signup");
     setwrongPassword("Kindly type in your correct password");
@@ -16,36 +17,49 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log(email, password);
+
     const clearEmail = email.trim();
     const clearPassword = password.trim();
 
     if (!clearEmail || !clearPassword) {
       alert("Please fill in all fields");
+      return;
     }
 
     if (password.length < 7) {
       alert("Password must be at least 7 characters");
+      return;
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:4000/api/v1/user/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: clearEmail,
-            password: clearPassword,
-          }),
-        }
-      );
+      setLoading(true);
+
+      const response = await fetch("http://localhost:4000/api/v1/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: clearEmail,
+          password: clearPassword,
+        }),
+      });
       const data = await response.json();
 
-      if (!response.ok) throw new Error(data.msg || "Something went wrong");
+      if (!response.ok) throw new Error(data.msg || "Invalid credentials");
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       console.log("User loggedIn:", data);
       navigate("/signup");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+      setwrongPassword(error.message);
+      setPassword("");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -83,10 +97,7 @@ const Signin = () => {
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
-              <input
-                type="checkbox"
-                className="focus:bg-[#3D9970] focus:text-red-100"
-              />
+              <input type="checkbox" className="accent-green-600 text-white" />
               <h6>Remember me</h6>
             </div>
             <span className="text-red-500 cursor-pointer">Forgot Password</span>
@@ -94,8 +105,9 @@ const Signin = () => {
           <button
             className="text-white bg-[#3D9970] py-3 rounded-xl cursor-pointer"
             type="submit"
+            disabled={loading}
           >
-            Sign In
+            {loading ? "Signing in..." : "Sign In"}
           </button>
           <div className="flex items-center w-full gap-2">
             {/* Left HR */}
