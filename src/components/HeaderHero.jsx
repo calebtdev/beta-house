@@ -6,7 +6,7 @@ import Hero from "./Hero";
 const HeaderHero = () => {
   return (
     <main
-      className="w-full bg-cover bg-center"
+      className="w-full bg-cover bg-center relative"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(${headerbg})`,
       }}

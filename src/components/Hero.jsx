@@ -13,7 +13,7 @@ const Hero = () => {
     }
   };
   return (
-    <section className="py-[5rem] gap-[2rem] flex flex-col items-center">
+    <section className="pt-[15rem] py-[5rem] gap-[2rem] flex flex-col items-center">
       <div className="flex flex-col text-white text-center gap-[2rem] px-[10rem]">
         <h1 className="text-[3rem] font-bold "> Browse Our Properties</h1>
         <p className="text-[1rem] px-[15rem]">

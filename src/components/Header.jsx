@@ -8,7 +8,7 @@ const Header = () => {
     navigate("/signin");
   };
   return (
-    <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30">
+    <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30 fixed max-w-[1450px]">
       {/* Logo */}
       <div className="flex flex-row gap-2 items-center">
         <span className="p-2 text-2xl bg-[#3D9970] font-bold text-white rounded-full">
