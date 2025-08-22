@@ -1,12 +1,25 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [user, setUser] = useState({ firstName: "", lastName: "" });
+
+  useEffect(() => {
+    const firstName = localStorage.getItem("firstName");
+    const lastName = localStorage.getItem("lastName");
+
+    if (firstName && lastName) {
+      setUser({ firstName, lastName });
+    }
+  }, []);
 
   const Signin = () => {
     navigate("/signin");
   };
+
   return (
     <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30 fixed max-w-[1450px]">
       {/* Logo */}
@@ -32,21 +45,30 @@ const Header = () => {
         </li>
       </ul>
 
-      {/* Buttons */}
-      <div className="flex flex-row gap-4 items-center">
-        <button
-          className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
-          onClick={Signin}
-        >
-          Sign in
-        </button>
-        <button
-          className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
-          onClick={() => navigate("/signup")}
-        >
-          Sign Up
-        </button>
-      </div>
+      {/* Show Signin/Signup only if NOT on /dashboard */}
+      {location.pathname !== "/dashboard" ? (
+        <div className="flex flex-row gap-4 items-center">
+          <button
+            className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
+            onClick={Signin}
+          >
+            Sign in
+          </button>
+          <button
+            className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </button>
+        </div>
+      ) : (
+        // Show user name instead when on /dashboard
+        <div className="text-lg font-semibold text-white">
+          {user.firstName && user.lastName
+            ? `${user.firstName} ${user.lastName}`
+            : "Guest"}
+        </div>
+      )}
     </header>
   );
 };

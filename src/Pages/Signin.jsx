@@ -11,7 +11,7 @@ const Signin = () => {
 
   const navigate = useNavigate();
   const Signuproute = () => {
-    Navigate("/signup");
+    navigate("/signup");
     setwrongPassword("Kindly type in your correct password");
   };
 
@@ -55,7 +55,7 @@ const Signin = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       console.log("User loggedIn:", data);
-      navigate("/signup");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error.message);
       setwrongPassword(error.message);
