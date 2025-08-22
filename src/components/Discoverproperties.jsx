@@ -55,7 +55,9 @@ const Discoverprop = () => {
             >
               <div className="flex flex-col gap-2 bg-black/50 w-full py-3 px-2">
                 <h1 className="text-[1rem]">{property.type}</h1>
-                <h1 className="font-bold pt-2">₦{property.amount}</h1>
+                <h1 className="font-bold pt-2">
+                  ₦ {property.amount.toLocaleString()}
+                </h1>
                 <div className="text-[12px] flex flex-row">
                   <span className="pr-2">{property.rooms} Bed</span>
                   <span className="border-l border-r border-gray-400 px-2">

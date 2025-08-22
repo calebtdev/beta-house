@@ -1,6 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const Signin = () => {
+    navigate("/signin");
+  };
   return (
     <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30">
       {/* Logo */}
@@ -28,11 +34,17 @@ const Header = () => {
 
       {/* Buttons */}
       <div className="flex flex-row gap-4 items-center">
-        <button className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition">
+        <button
+          className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
+          onClick={Signin}
+        >
           Sign in
         </button>
-        <button className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition">
-          Login
+        <button
+          className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
+          onClick={() => navigate("/signup")}
+        >
+          Sign Up
         </button>
       </div>
     </header>
