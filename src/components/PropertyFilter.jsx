@@ -29,7 +29,7 @@ const PropertyFilter = () => {
     const fetchProperties = async () => {
       try {
         const res = await fetch(
-          "https://beta-house-backend-xcox.onrender.com//api/v1/properties?featured=false"
+          "https://beta-house-backend-xcox.onrender.com/api/v1/properties?featured=false"
         );
         const data = await res.json();
         console.log("API response:", data);
