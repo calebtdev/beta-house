@@ -10,7 +10,7 @@ const Discoverprop = () => {
     const fetchFeatured = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/v1/properties?featured=true"
+          "https://beta-house-backend-xcox.onrender.com/api/v1/properties?featured=true"
         );
         const data = await response.json();
 
