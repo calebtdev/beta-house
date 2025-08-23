@@ -3,10 +3,10 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#035A33] w-full py-10  text-white items-center">
-      <div className="flex flex-row justify-center gap-10 px-[5%]">
+    <footer className="bg-[#035A33] w-full py-10 text-white">
+      <div className="flex flex-col md:flex-row justify-center md:justify-between gap-10 px-4 sm:px-6 md:px-12">
         {/* Logo & About */}
-        <div className="flex flex-col gap-5 w-[30%]">
+        <div className="flex flex-col gap-5 w-full md:w-[30%]">
           <div className="flex items-center gap-2">
             <span className="p-2 text-2xl bg-[#3D9970] font-bold text-white rounded-full">
               BH
@@ -45,7 +45,7 @@ const Footer = () => {
         </div>
 
         {/* Quick Links */}
-        <div className="w-[20%]">
+        <div className="w-full md:w-[20%]">
           <h1 className="font-semibold text-lg mb-3">Quick Links</h1>
           <ul className="flex flex-col gap-2 text-sm">
             <li className="hover:text-gray-300 cursor-pointer">Home</li>
@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
 
         {/* More */}
-        <div className="w-[20%]">
+        <div className="w-full md:w-[20%]">
           <h1 className="font-semibold text-lg mb-3">More</h1>
           <ul className="flex flex-col gap-2 text-sm">
             <li className="hover:text-gray-300 cursor-pointer">Agents</li>
@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
 
         {/* Popular Searches */}
-        <div className="w-[20%]">
+        <div className="w-full md:w-[20%]">
           <h1 className="font-semibold text-lg mb-3">Popular Searches</h1>
           <ul className="flex flex-col gap-2 text-sm">
             <li className="hover:text-gray-300 cursor-pointer">
@@ -87,11 +87,13 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="flex flex-row justify-between mt-10 border-t border-gray-500 pt-4 px-[5%] text-xs text-gray-300">
-        <span>
+      <div className="flex flex-col md:flex-row justify-center md:justify-between mt-10 border-t border-gray-500 pt-4 px-4 sm:px-6 md:px-12 text-xs text-gray-300 gap-2 md:gap-0">
+        <span className="text-center md:text-left">
           © {new Date().getFullYear()} BetaHouse | Designed by Caleb.dev
         </span>
-        <span className="text-white">Privacy Policy</span>
+        <span className="text-center md:text-right text-white cursor-pointer">
+          Privacy Policy
+        </span>
       </div>
     </footer>
   );
