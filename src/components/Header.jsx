@@ -56,7 +56,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-4 px-6 md:px-10 flex items-center justify-between w-full bg-black/30 fixed z-50">
+    <header className="py-4 px-6 md:px-10 flex items-center justify-between w-full bg-black/30 fixed z-50 max-w-[1450px]">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <span className="p-2 text-2xl bg-[#3D9970] font-bold text-white rounded-full">
