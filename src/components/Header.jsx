@@ -85,7 +85,8 @@ const Header = () => {
 
       {/* User / Sign In */}
       {isLoggedIn ? (
-        <div className="relative">
+        <div className="relative flex flex-row items-center">
+          <div className="w-7 h-7 bg-[#3D9970] border-white border rounded-full border-3"></div>
           <button
             className="flex items-center gap-1 text-white font-semibold px-4 py-2 rounded-lg hover:bg-white hover:text-[#3D9970] transition"
             onClick={toggleDropdown}
