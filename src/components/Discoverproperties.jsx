@@ -109,7 +109,7 @@ const Discoverprop = () => {
           <button
             type="button"
             onClick={scrollLeft}
-            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 z-10 w-10 h-10 rounded-full bg-gray-300 shadow-md flex items-center justify-center hover:bg-[#3D9970] hover:text-white"
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 z-10 w-10 h-10 rounded-full bg-gray-300 shadow-md flex items-center justify-center hover:bg-[#3D9970] hover:text-white cursor-pointer"
           >
             &larr;
           </button>
@@ -118,7 +118,7 @@ const Discoverprop = () => {
           <button
             type="button"
             onClick={scrollRight}
-            className="absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-0 z-10 w-10 h-10 rounded-full bg-gray-300 shadow-md flex items-center justify-center hover:bg-[#3D9970] hover:text-white"
+            className="absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-0 z-10 w-10 h-10 rounded-full bg-gray-300 shadow-md flex items-center justify-center hover:bg-[#3D9970] hover:text-white cursor-pointer"
           >
             &rarr;
           </button>
