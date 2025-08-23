@@ -5,20 +5,50 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [user, setUser] = useState({ firstName: "", lastName: "" });
+  const [user, setUser] = useState(null);
+
+  const readUserFromStorage = () => {
+    try {
+      const raw = sessionStorage.getItem("user");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed?.firstname || parsed?.lastname) {
+          setUser(parsed);
+          return;
+        }
+      }
+
+      // fallback for separate keys if ever used
+      const firstname = sessionStorage.getItem("firstname") || "";
+      const lastname = sessionStorage.getItem("lastname") || "";
+      setUser(firstname || lastname ? { firstname, lastname } : null);
+    } catch {
+      setUser(null);
+    }
+  };
 
   useEffect(() => {
-    const firstName = localStorage.getItem("firstName");
-    const lastName = localStorage.getItem("lastName");
+    readUserFromStorage();
+  }, [location.pathname]);
 
-    if (firstName && lastName) {
-      setUser({ firstName, lastName });
-    }
+  // Listen for auth changes across tabs
+  useEffect(() => {
+    const onAuthChange = () => readUserFromStorage();
+    const onStorage = (e) => {
+      if (!e.key || ["user", "firstname", "lastname"].includes(e.key)) {
+        readUserFromStorage();
+      }
+    };
+    window.addEventListener("auth-change", onAuthChange);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener("auth-change", onAuthChange);
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
 
-  const Signin = () => {
-    navigate("/signin");
-  };
+  const Signin = () => navigate("/signin");
+  const isLoggedIn = !!user;
 
   return (
     <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30 fixed max-w-[1450px]">
@@ -45,27 +75,31 @@ const Header = () => {
         </li>
       </ul>
 
-      {/* Show Signin/Signup only if NOT on /dashboard */}
       {location.pathname !== "/dashboard" ? (
-        <div className="flex flex-row gap-4 items-center">
-          <button
-            className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
-            onClick={Signin}
-          >
-            Sign in
-          </button>
-          <button
-            className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
-            onClick={() => navigate("/signup")}
-          >
-            Sign Up
-          </button>
-        </div>
+        isLoggedIn ? (
+          <div className="text-lg font-semibold text-white">
+            {`${user.firstname ?? ""} ${user.lastname ?? ""}`.trim() || "Guest"}
+          </div>
+        ) : (
+          <div className="flex flex-row gap-4 items-center">
+            <button
+              className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
+              onClick={Signin}
+            >
+              Sign in
+            </button>
+            <button
+              className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </button>
+          </div>
+        )
       ) : (
-        // Show user name instead when on /dashboard
         <div className="text-lg font-semibold text-white">
-          {user.firstName && user.lastName
-            ? `${user.firstName} ${user.lastName}`
+          {isLoggedIn
+            ? `${user.firstname ?? ""} ${user.lastname ?? ""}`.trim() || "Guest"
             : "Guest"}
         </div>
       )}
