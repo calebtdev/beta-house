@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { FiChevronDown } from "react-icons/fi"; // Arrow icon
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // ✅ Added state for dropdown
 
   const readUserFromStorage = () => {
     try {
@@ -17,11 +19,7 @@ const Header = () => {
           return;
         }
       }
-
-      // fallback for separate keys if ever used
-      const firstname = sessionStorage.getItem("firstname") || "";
-      const lastname = sessionStorage.getItem("lastname") || "";
-      setUser(firstname || lastname ? { firstname, lastname } : null);
+      setUser(null);
     } catch {
       setUser(null);
     }
@@ -31,11 +29,10 @@ const Header = () => {
     readUserFromStorage();
   }, [location.pathname]);
 
-  // Listen for auth changes across tabs
   useEffect(() => {
     const onAuthChange = () => readUserFromStorage();
     const onStorage = (e) => {
-      if (!e.key || ["user", "firstname", "lastname"].includes(e.key)) {
+      if (!e.key || ["user"].includes(e.key)) {
         readUserFromStorage();
       }
     };
@@ -47,11 +44,22 @@ const Header = () => {
     };
   }, []);
 
-  const Signin = () => navigate("/signin");
   const isLoggedIn = !!user;
 
+  const Signin = () => navigate("/signin");
+
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    setUser(null);
+    setDropdownOpen(false);
+    navigate("/");
+  };
+
   return (
-    <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30 fixed max-w-[1450px]">
+    <header className="py-6 px-10 flex flex-row items-center justify-between w-full bg-black/30 fixed max-w-[1450px] z-50">
       {/* Logo */}
       <div className="flex flex-row gap-2 items-center">
         <span className="p-2 text-2xl bg-[#3D9970] font-bold text-white rounded-full">
@@ -75,32 +83,46 @@ const Header = () => {
         </li>
       </ul>
 
-      {location.pathname !== "/dashboard" ? (
-        isLoggedIn ? (
-          <div className="text-lg font-semibold text-white">
+      {/* User / Sign In */}
+      {isLoggedIn ? (
+        <div className="relative">
+          <button
+            className="flex items-center gap-1 text-white font-semibold px-4 py-2 rounded-lg hover:bg-white hover:text-[#3D9970] transition"
+            onClick={toggleDropdown}
+          >
             {`${user.firstname ?? ""} ${user.lastname ?? ""}`.trim() || "Guest"}
-          </div>
-        ) : (
-          <div className="flex flex-row gap-4 items-center">
-            <button
-              className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
-              onClick={Signin}
-            >
-              Sign in
-            </button>
-            <button
-              className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition"
-              onClick={() => navigate("/signup")}
-            >
-              Sign Up
-            </button>
-          </div>
-        )
+            <FiChevronDown
+              className={`ml-1 transition-transform ${
+                dropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden z-50">
+              <button
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       ) : (
-        <div className="text-lg font-semibold text-white">
-          {isLoggedIn
-            ? `${user.firstname ?? ""} ${user.lastname ?? ""}`.trim() || "Guest"
-            : "Guest"}
+        <div className="flex flex-row gap-4 items-center">
+          <button
+            className="px-4 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#3D9970] transition cursor-pointer"
+            onClick={Signin}
+          >
+            Sign in
+          </button>
+          <button
+            className="px-4 py-2 bg-[#3D9970] text-white rounded-lg hover:bg-[#2E7D57] transition cursor-pointer"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </button>
         </div>
       )}
     </header>
