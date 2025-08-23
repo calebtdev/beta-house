@@ -16,7 +16,7 @@ const Hero = () => {
     <section className="pt-[15rem] py-[5rem] gap-[2rem] flex flex-col items-center">
       <div className="flex flex-col text-white text-center gap-[2rem] px-[10rem]">
         <h1 className="text-[3rem] font-bold "> Browse Our Properties</h1>
-        <p className="text-[1rem] px-[15rem]">
+        <p className="text-[1rem] px-[20rem]">
           Find your perfect home among our curated peroperties. Start browsing
           now!
         </p>
@@ -25,14 +25,18 @@ const Hero = () => {
         <div className="flex flex-row items-center rounded-xl bg-white overflow-hidden uppercase">
           <div className="px-[2rem] py-[1rem] font-bold">
             <h3>Location</h3>
-            <input type="text" placeholder="e.g Gbagada" className="py-1" />
+            <input
+              type="text"
+              placeholder="e.g Gbagada"
+              className="py-1 focus:outline-none"
+            />
           </div>
           <div className=" border-l px-[2rem] my-[1rem] flex flex-col items-center">
             <h3 className="font-bold">property type</h3>
             <input
               type="text"
               placeholder="e.g Duplex, BedroomFlat"
-              className="py-1"
+              className="py-1 focus:outline-none"
             />
           </div>
           <div className="px-[2rem] my-[1rem] border-l flex flex-col gap-1 items-center">
