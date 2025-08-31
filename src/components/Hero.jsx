@@ -14,7 +14,7 @@ const Hero = () => {
           Browse Our Properties
         </h1>
         <p className="text-sm md:text-base px-4 sm:px-20 md:px-0">
-          Find your perfect home among our curated properties. Start browsing
+          Find your perfect home among our curated properties and Start browsing
           now!
         </p>
       </div>
