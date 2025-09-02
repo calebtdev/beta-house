@@ -10,9 +10,7 @@ const Hero = () => {
     <section className="pt-36 md:pt-60 pb-20 flex flex-col items-center gap-8">
       {/* Hero Text */}
       <div className="flex flex-col text-white text-center gap-6 px-6 sm:px-10 md:px-40">
-        <h1 className="text-3xl md:text-5xl font-bold">
-          Browse Our Properties
-        </h1>
+        <h1 className="text-3xl md:text-5xl font-bold">Browse Properties</h1>
         <p className="text-sm md:text-base px-4 sm:px-20 md:px-0">
           Find your perfect home among our curated properties. Start browsing
           now!
